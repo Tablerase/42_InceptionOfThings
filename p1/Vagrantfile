@@ -5,9 +5,23 @@ Vagrant.configure("2") do |config|
   # Vagrant box: https://developer.hashicorp.com/vagrant/docs/boxes#official-boxes
   config.vm.box = "bento/ubuntu-24.04"
   config.vm.box_version = "202508.03.0"
+  config.trigger.before :destroy do |trigger|
+  trigger.run = {
+    inline: <<-SHELL
+      if [ -d "/home/rmohamma/sgoinfre/goinfre/perso/rmohamma/Git/p1/confs" ]; then
+        rm -rf "/home/rmohamma/sgoinfre/goinfre/perso/rmohamma/Git/p1/confs"
+        echo "Folder removed."
+      else
+        echo "Folder does not exist."
+      fi
+    SHELL
+  }
+end
+
 
   config.vm.define "rcutteS" do |control|
     control.vm.hostname = "rcutteS"
+    # 192.168.0.0 – 192.168.255.255
     control.vm.network "private_network", ip: "192.168.56.110"
     
     control.vm.provider "virtualbox" do |v|
@@ -18,10 +32,10 @@ Vagrant.configure("2") do |config|
       v.memory = 512
       v.cpus = 1
     end
-    control.vm.provision "shell", inline: <<-SHELL
-      echo 'Hello from Server'
-    SHELL
-    # control.vm.provision "shell", path: "./setup_ssh.sh"
+    # control.vm.provision "shell", inline: <<-SHELL
+    #   echo 'Hello from Server'
+    # SHELL
+    control.vm.provision "shell", path: "scripts/install_server.sh"
   end
 
   config.vm.define "rcutteSW" do |control|
@@ -32,12 +46,13 @@ Vagrant.configure("2") do |config|
       v.memory = 512
       v.cpus = 1
     end
-    control.vm.provision "shell", inline: <<-SHELL
-      echo 'Hello from Worker'
-    SHELL
-    # control.vm.provision "shell", path: "./setup_ssh.sh"
+    # control.vm.provision "shell", inline: <<-SHELL
+    #   echo 'Hello from Worker'
+    # SHELL
+    control.vm.provision "shell", path: "scripts/install_worker.sh"
   end
 
   # Providers: https://developer.hashicorp.com/vagrant/docs/providers/basic_usage
   config.vm.provider "virtualbox"
+
 end
