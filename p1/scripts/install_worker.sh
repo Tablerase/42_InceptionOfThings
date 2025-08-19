@@ -39,6 +39,9 @@
 # curl -sfL https://get.k3s.io | K3S_URL="https://192.168.56.110:6443" K3S_TOKEN="$TOKEN" sh -
 
 
+
+
+
 #!/bin/bash
 set -e
 
@@ -62,15 +65,25 @@ if [ -f /usr/local/bin/k3s ]; then
     echo "Removing previous K3s installation..."
     sudo /usr/local/bin/k3s-agent-uninstall.sh || true
 fi
+
+# Remove old directories and service files
 sudo rm -rf /var/lib/rancher/k3s /etc/rancher/k3s
+sudo rm -f /etc/systemd/system/k3s-agent.service
+sudo systemctl daemon-reload
 
-# Install K3s agent
-curl -sfL https://get.k3s.io | K3S_URL="https://$SERVER_IP:6443" K3S_TOKEN="$TOKEN" sh -
+# Install K3s agent with correct server IP
+echo "Installing K3s agent connecting to $SERVER_IP..."
+curl -sfL https://get.k3s.io | \
+K3S_URL="https://$SERVER_IP:6443" \
+K3S_TOKEN="$TOKEN" \
+K3S_AGENT_NO_LOAD_BALANCER=true \
+sh -
 
-# Check service status
+
+# Ensure systemd uses the updated service
 sudo systemctl daemon-reload
 sudo systemctl enable k3s-agent
-sudo systemctl start k3s-agent
+sudo systemctl restart k3s-agent
 
 echo "✅ K3s worker installation completed. Node has joined the cluster."
-sudo systemctl status k3s-agent
+sudo systemctl status k3s-agent --no-pager

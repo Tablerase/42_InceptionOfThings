@@ -6,18 +6,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-24.04"
   config.vm.box_version = "202508.03.0"
   config.trigger.before :destroy do |trigger|
-  trigger.run = {
-    inline: <<-SHELL
-      if [ -d "/home/rmohamma/sgoinfre/goinfre/perso/rmohamma/Git/p1/confs" ]; then
-        rm -rf "/home/rmohamma/sgoinfre/goinfre/perso/rmohamma/Git/p1/confs"
-        echo "Folder removed."
-      else
-        echo "Folder does not exist."
-      fi
-    SHELL
-  }
-end
-
+  trigger.run = {inline: "rm -rf /home/rmohamma/sgoinfre/goinfre/perso/rmohamma/Git/p1/confs"}
+  end
 
   config.vm.define "rcutteS" do |control|
     control.vm.hostname = "rcutteS"

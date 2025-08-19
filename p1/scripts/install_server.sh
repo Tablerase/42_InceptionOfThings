@@ -31,4 +31,4 @@ sudo cp /etc/rancher/k3s/k3s.yaml /home/vagrant/.kube/config
 sudo chown vagrant:vagrant /home/vagrant/.kube/config
 sudo chmod 644 /home/vagrant/.kube/config
 
-echo "K3s server installation completed. Node token is ready for workers."
+echo "✅ K3s server installation completed. Node token is ready for workers."
