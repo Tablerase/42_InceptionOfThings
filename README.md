@@ -9,10 +9,16 @@ Orchestration project with Vagrant and Kubernetes 3d &amp; 3s
 - [K3S Install Config Script](https://docs.k3s.io/installation/configuration)
   - [Install Env Vars](https://docs.k3s.io/reference/env-variables)
 - [📑 K3S Documentation](https://docs.k3s.io/)
+  - [K3S Doc Agent](https://docs.k3s.io/cli/agent)
+  - [K3S Doc Server](https://docs.k3s.io/cli/server)
 
 K3S is a lightweight Kubernetes distribution designed for resource-constrained environments and edge computing. It simplifies the deployment and management of Kubernetes clusters by reducing the complexity and resource requirements typically associated with standard Kubernetes installations.
 
-#### Architecture
+#### K3S - Flannel
+
+Flannel is a virtual network that connects containers across multiple hosts. It is often used as a network fabric for Kubernetes clusters, providing a layer 3 network that enables pods to communicate with each other regardless of the host they are running on.
+
+#### [K3S Architecture](https://docs.k3s.io/architecture/)
 
 ![K3S Architecture](https://docs.k3s.io/assets/images/how-it-works-k3s-revised-9c025ef482404bca2e53a89a0ba7a3c5.svg)
 

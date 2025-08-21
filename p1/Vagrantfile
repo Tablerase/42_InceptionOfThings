@@ -1,5 +1,6 @@
 # Vagrant file to setup 2 VMs (1 Server: S, 1 Worker: SW)
 # VM specs: 1 CPU, 512MB RAM
+# Vagrant Multi-VM : https://developer.hashicorp.com/vagrant/docs/multi-machine
 
 Vagrant.configure("2") do |config|
   # Vagrant box: https://developer.hashicorp.com/vagrant/docs/boxes#official-boxes
@@ -8,7 +9,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "rcutteS" do |control|
     control.vm.hostname = "rcutteS"
-    control.vm.network "private_network", ip: "192.168.56.110"
+    # Virtual box networking: https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/networking#virtualbox-internal-network
+    control.vm.network "private_network", ip: "192.168.56.110", virtualbox__intnet: true
     
     control.vm.provider "virtualbox" do |v|
       # Configure VirtualBox: https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/configuration
@@ -21,12 +23,12 @@ Vagrant.configure("2") do |config|
     control.vm.provision "shell", inline: <<-SHELL
       echo 'Hello from Server'
     SHELL
-    # control.vm.provision "shell", path: "./setup_ssh.sh"
+    control.vm.provision "shell", path: "./setup_server.sh"
   end
 
   config.vm.define "rcutteSW" do |control|
     control.vm.hostname = "rcutteSW"
-    control.vm.network "private_network", ip: "192.168.56.111"
+    control.vm.network "private_network", ip: "192.168.56.111", virtualbox__intnet: true
     control.vm.provider "virtualbox" do |v|
       v.customize ["modifyvm", :id, "--name", "rcutteSW"]
       v.memory = 512
@@ -35,7 +37,7 @@ Vagrant.configure("2") do |config|
     control.vm.provision "shell", inline: <<-SHELL
       echo 'Hello from Worker'
     SHELL
-    # control.vm.provision "shell", path: "./setup_ssh.sh"
+    control.vm.provision "shell", path: "./setup_agent.sh"
   end
 
   # Providers: https://developer.hashicorp.com/vagrant/docs/providers/basic_usage

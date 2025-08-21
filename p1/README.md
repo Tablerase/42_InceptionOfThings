@@ -1,5 +1,12 @@
 # P1 - Setup K3S Server and Agent
 
+```bash
+# Check ip address
+ip addr show
+## Only show eth1
+ip addr show eth1
+```
+
 ```mermaid
 ---
 title: K3S Server - Agent Setup
@@ -15,10 +22,10 @@ flowchart TD
     end
 
     subgraph VirtualBox["🥡 VirtualBox"]
-      subgraph VMServer["🖥️ loginS"]
+      subgraph VMServer["🖥️ loginS <br> 192.168.56.110"]
         K3S_Server["☸️ K3S Server"]
       end
-      subgraph VMWorker["🖥️ loginSW"]
+      subgraph VMWorker["🖥️ loginSW <br> 192.168.56.111"]
         K3S_Agent["☸️ K3S Agent"]
       end
     end
@@ -40,3 +47,10 @@ flowchart TD
   class Vagrant vagrant
   class VirtualBox vbox
 ```
+
+## Networking
+
+`eth1` is the name of the second ethernet network interface. In a Vagrant/VirtualBox setup, it's often used for the private or host-only network that allows VMs to communicate with each other.
+
+- `mtu` (Maximum Transmission Unit) is the size of the largest packet that can be sent over the network interface.
+- `enp0s8` is another naming convention for network interfaces in Linux, often used in cloud environments. It serves a similar purpose as `eth1`. It means "Ethernet, PCI bus 0, slot 8".

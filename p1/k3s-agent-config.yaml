@@ -1,0 +1,6 @@
+# Config CLI args as yaml: https://docs.k3s.io/cli/server
+
+node-ip: 192.168.56.111
+token: "CHANGE_ME"
+server: "https://192.168.56.110:6443"
+log: /vagrant/logs/k3s-agent.log
