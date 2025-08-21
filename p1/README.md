@@ -7,6 +7,11 @@ ip addr show
 ip addr show eth1
 ```
 
+```bash
+# Display node information
+kubectl get nodes -o wide
+```
+
 ```mermaid
 ---
 title: K3S Server - Agent Setup
@@ -31,7 +36,7 @@ flowchart TD
     end
 
     Vagrant -->|Provisioning| VirtualBox
-    K3S_Server <-->|Communication| K3S_Agent
+    K3S_Server k3sc@<-->|Communication<br>6443| K3S_Agent
   end
 
   classDef files fill: #fadc89ff,color: #616161ff,stroke: #b4befe
@@ -40,9 +45,9 @@ flowchart TD
   classDef vagrant fill: #89b4fa,color: #1e1e2e,stroke: #b4befe
   classDef kubern fill: #a6e3a17c,color: #1e1e2e,stroke: #94e2d5
   classDef vbox fill: #dff8ffff,color: #1e1e2e,stroke: #dff8ffff
-  classDef web-anim stroke-dasharray: 9,5, stroke-dashoffset: 900, stroke-width: 2, stroke: #489e5dff, animation: dash 25s linear infinite;
-  classDef ansible-anim stroke-dasharray: 5,5, stroke-dashoffset: 300, stroke-width: 2, stroke: #e0b25cff, animation: dash 25s linear infinite;
+  classDef kub-anim stroke-dasharray: 5,5, stroke-dashoffset: 300, stroke-width: 2, stroke: #e0b25cff, animation: dash 25s linear infinite;
 
+  class k3sc kub-anim
   class K3S_Server,K3S_Agent kubern
   class Vagrant vagrant
   class VirtualBox vbox
