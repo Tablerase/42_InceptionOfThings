@@ -1,5 +1,5 @@
 # Vagrant file to setup 2 VMs (1 Server: S, 1 Worker: SW)
-# VM specs: 1 CPU, 512MB RAM
+# VM specs: 1 CPU, 512MB/1024MB RAM
 # Vagrant Multi-VM : https://developer.hashicorp.com/vagrant/docs/multi-machine
 
 Vagrant.configure("2") do |config|
