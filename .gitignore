@@ -1,3 +1,4 @@
 .vagrant
 .ruby-lsp
 logs/
+*.token

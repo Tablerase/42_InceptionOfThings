@@ -1,9 +1,0 @@
-# Config CLI args as yaml: https://docs.k3s.io/cli/server
-
-node-ip: 192.168.56.110
-write-kubeconfig-mode: 644
-token: "CHANGE_ME"
-cluster-init: true
-log: /vagrant/logs/k3s-server.log
-# disable:
-#   - flannel
