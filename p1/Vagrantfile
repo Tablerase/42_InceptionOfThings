@@ -9,17 +9,25 @@ Vagrant.configure("2") do |config|
   trigger.run = {inline: "rm -rf /home/rmohamma/sgoinfre/goinfre/perso/rmohamma/Git/p1/confs"}
   end
 
+  # # --- vbguest plugin global settings ---
+  # if Vagrant.has_plugin?("vagrant-vbguest")
+  #   config.vbguest.auto_update = true   # keep Guest Additions in sync
+  #   config.vbguest.no_remote = false    # allow downloading matching ISO if needed
+  # end
+
+  # Master
   config.vm.define "rcutteS" do |control|
     control.vm.hostname = "rcutteS"
     # 192.168.0.0 – 192.168.255.255
     control.vm.network "private_network", ip: "192.168.56.110"
+    
     
     control.vm.provider "virtualbox" do |v|
       # Configure VirtualBox: https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/configuration
       ## vagrant vbox config: https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/configuration#vboxmanage-customizations
       ## vbox customize list: https://www.virtualbox.org/manual/ch08.html#vboxmanage-modifyvm
       v.customize ["modifyvm", :id, "--name", "rcutteS"]
-      v.memory = 512
+      v.memory = 1024
       v.cpus = 1
     end
     # control.vm.provision "shell", inline: <<-SHELL
@@ -28,9 +36,11 @@ Vagrant.configure("2") do |config|
     control.vm.provision "shell", path: "scripts/install_server.sh"
   end
 
+  # Worker
   config.vm.define "rcutteSW" do |control|
     control.vm.hostname = "rcutteSW"
     control.vm.network "private_network", ip: "192.168.56.111"
+
     control.vm.provider "virtualbox" do |v|
       v.customize ["modifyvm", :id, "--name", "rcutteSW"]
       v.memory = 512
@@ -39,7 +49,7 @@ Vagrant.configure("2") do |config|
     # control.vm.provision "shell", inline: <<-SHELL
     #   echo 'Hello from Worker'
     # SHELL
-    control.vm.provision "shell", path: "scripts/install_worker.sh"
+    control.vm.provision "shell", path: "scripts/install_worker.sh", args: ["192.168.56.10"]
   end
 
   # Providers: https://developer.hashicorp.com/vagrant/docs/providers/basic_usage

@@ -1,0 +1,16 @@
+
+
++++  A kubeconfig file will be written to /etc/rancher/k3s/k3s.yaml
+
+By default, kubectl looks for a file named config in the $HOME/.kube directory.
+You can specify other kubeconfig files by setting the KUBECONFIG environment variable or by setting the --kubeconfig flag.
+
+The KUBECONFIG environment variable is not required. If the KUBECONFIG environment variable doesn't exist, kubectl uses the default kubeconfig file, $HOME/.kube/config.
+
+
+@ To see your configuration, enter this command:
+kubectl config view
+
+
+
+The value to use for K3S_TOKEN is stored at /var/lib/rancher/k3s/server/node-token on your server node.
