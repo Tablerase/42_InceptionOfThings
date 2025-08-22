@@ -1,12 +1,25 @@
 # P2 - Kubernetes Apps and Ingress
 
 ```bash
-# 
+# Install VM
+vagrant up
+# Connect to VM by ssh
+vagrant ssh rcutteS
 ```
 
 ```bash
-# Try to reach a host
-curl -H "Host:app1.com" 192.168.56.110
+# Kubectl infos
+kubectl get all
+```
+
+```bash
+# Ingress status
+kubectl get ingress multi-app-ingress
+```
+
+```bash
+# Try to reach a host (response with body+headers)
+curl -i -H "Host:app1.com" 192.168.56.110
 ```
 
 ```mermaid
@@ -26,7 +39,7 @@ flowchart TD
     subgraph VirtualBox["🥡 VirtualBox"]
       subgraph VMServer["🖥️ loginS <br> 192.168.56.110"]
         Client@{ shape: div-proc, label: "Client" }
-        subgraph K3S_Server["☸️ K3S Server"]
+        subgraph K3S_Server["☸️ K3S Server<br> (include agent)"]
           subgraph Ingress["🌐 Ingress"]
             IngressController@{ shape: das, label: "📦 Ingress Controller" }
           end
@@ -66,5 +79,3 @@ flowchart TD
   class Vagrant vagrant
   class VirtualBox vbox
 ```
-
-- [📖 Ingress Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)

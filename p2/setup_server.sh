@@ -54,3 +54,18 @@ while :; do
   sleep "$interval"
 done
 
+# Deploy applications, services, and ingress
+# - https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/#how-to-create-objects
+kubectl apply -f /vagrant/multi_apps/app1/
+kubectl apply -f /vagrant/multi_apps/app2/
+kubectl apply -f /vagrant/multi_apps/app3/
+kubectl apply -f /vagrant/multi_apps/ingress.yaml
+
+# Check all info
+# kubectl get all
+
+# Check ingress status
+# kubectl get ingress multi-app-ingress
+
+# Connect to a host
+# curl -i -H "Host:app1.com" $SERVER_HOST

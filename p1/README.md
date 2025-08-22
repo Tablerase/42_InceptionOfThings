@@ -1,6 +1,13 @@
 # P1 - Setup K3S Server and Agent
 
 ```bash
+# Install VM
+vagrant up
+# Connect to VM by ssh
+vagrant ssh rcutteS
+```
+
+```bash
 # Check ip address
 ip addr show
 ## Only show eth1

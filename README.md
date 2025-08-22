@@ -10,9 +10,16 @@ Orchestration project with Vagrant and Kubernetes 3d &amp; 3s
 
 ### Kubernetes
 
-[Kubernetes Objects - Declarative management using config files](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/)
+- [Kubernetes Objects - Declarative management using config files](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/)
+- [Kubernetes Glossary](https://kubernetes.io/docs/reference/glossary/?fundamental=true)
+- [Kubernetes - Reference](https://kubernetes.io/docs/reference/)
 
 Kubernetes is an open-source container orchestration platform designed to automate the deployment, scaling, and management of containerized applications. It provides a robust framework for running distributed systems resiliently, allowing for load balancing, service discovery, and self-healing capabilities.
+
+```bash
+# Create Kubernetes Objects
+kubectl apply -f <directory>
+```
 
 #### K3S
 
@@ -101,6 +108,10 @@ end
 vagrant up
 vagrant halt
 vagrant destroy
+```
+
+```bash
+vagrant ssh <vm_name>
 ```
 
 ```bash
