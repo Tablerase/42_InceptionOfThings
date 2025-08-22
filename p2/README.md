@@ -1,5 +1,14 @@
 # P2 - Kubernetes Apps and Ingress
 
+```bash
+# 
+```
+
+```bash
+# Try to reach a host
+curl -H "Host:app1.com" 192.168.56.110
+```
+
 ```mermaid
 ---
 title: K3S Instance
@@ -57,3 +66,5 @@ flowchart TD
   class Vagrant vagrant
   class VirtualBox vbox
 ```
+
+- [📖 Ingress Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)

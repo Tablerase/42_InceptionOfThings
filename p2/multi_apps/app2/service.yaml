@@ -1,0 +1,17 @@
+# kubernetes service docs:
+# - https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/
+# - https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2-service
+spec:
+  selector:
+    app: app2
+  type: ClusterIP
+  ports:
+  - name: app2-s-port
+    protocol: TCP
+    port: 80
+    targetPort: app2-d-port
+
