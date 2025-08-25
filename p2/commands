@@ -1,0 +1,28 @@
+sudo k3s ctr image list
+
+
+sudo k3s kubectl delete pod app-one-86487d7b57-9h9t2
+sudo k3s kubectl apply -f /vagrant/projects/app1/app-one-deployment.yaml
+
+
+sudo k3s kubectl describe pod app-one-86487d7b57-9h9t2
+sudo k3s kubectl logs app-one-86487d7b57-9h9t2
+
+
+
+
+to connect to the dashboard:
+1)Use SSH port forwarding
+SSH into your Vagrant VM with port forwarding:
+    vagrant ssh -- -L 8001:127.0.0.1:8001
+This maps port 8001 on your host to port 8001 on the VM.
+
+2)Inside the VM, run:
+    sudo k3s kubectl proxy --address='0.0.0.0' --accept-hosts='^.*$'
+
+--address='0.0.0.0' allows connections from outside the VM.
+
+--accept-hosts='^.*$' allows any host to connect (safe locally).
+
+3)On your host machine, open browser:
+    http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/

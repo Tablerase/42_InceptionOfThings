@@ -1,19 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
-# Install K3S Server
-# Kubectl (auto installed by k3s install script): https://docs.k3s.io/quick-start#install-script
-# K3S Env vars: https://docs.k3s.io/reference/env-variables
-# K3S Server: https://docs.k3s.io/cli/server
-# K3S Config: https://docs.k3s.io/installation/configuration#configuration-file
-
 SERVER_HOST="${K3S_SERVER_HOST:-192.168.56.110}"
 SERVER_PORT="${K3S_SERVER_PORT:-6443}"
 
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - \
-  --write-kubeconfig-mode 644 \
-  --log "/vagrant/logs/k3s-server.log" \
-  --node-ip "${SERVER_HOST}"
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - 
+
 
 timeout=60
 interval=2
@@ -54,18 +46,5 @@ while :; do
   sleep "$interval"
 done
 
-# Deploy applications, services, and ingress
-# - https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/#how-to-create-objects
-kubectl apply -f /vagrant/multi_apps/app1/
-kubectl apply -f /vagrant/multi_apps/app2/
-kubectl apply -f /vagrant/multi_apps/app3/
-kubectl apply -f /vagrant/multi_apps/ingress.yaml
-
-# Check all info
-# kubectl get all
-
-# Check ingress status
-# kubectl get ingress multi-app-ingress
-
-# Connect to a host
-# curl -i -H "Host:app1.com" $SERVER_HOST
+# Save the token for agents to use
+cat /var/lib/rancher/k3s/server/token > /vagrant/k3s.token
