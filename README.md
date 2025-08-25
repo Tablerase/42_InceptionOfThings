@@ -68,6 +68,31 @@ graph LR;
   class cluster cluster;
 ```
 
+#### K3D
+
+- [K3D Install](https://k3d.io/v5.4.6/#installation)
+- [📑 K3D Documentation](https://k3d.io/v5.4.6/#documentation)
+
+K3D is a lightweight wrapper around K3s that allows you to run K3s clusters in Docker containers. It simplifies the process of creating and managing local Kubernetes clusters for development and testing purposes.
+
+```bash
+# Create a K3D cluster with 1 server and 2 agents
+k3d cluster create mycluster --servers 1 --agents 2
+```
+
+### Argo CD
+
+- [Argo CD Install](https://argo-cd.readthedocs.io/en/stable/getting_started/)
+- [📑 Argo CD Documentation](https://argo-cd.readthedocs.io)
+
+Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. It automates the deployment and management of applications by synchronizing the desired state defined in Git repositories with the actual state in the Kubernetes cluster.
+
+```bash
+# Install Argo CD in the argocd namespace
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
 ### Vagrant
 
 - [Vagrant Install](https://developer.hashicorp.com/vagrant/install)
