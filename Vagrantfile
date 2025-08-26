@@ -1,0 +1,20 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-24.04"
+  config.vm.box_version = "202508.03.0"
+
+  config.vm.define "VM" do |control|
+    control.vm.hostname = "VM"
+    control.vm.network "private_network", ip: "192.168.56.110", virtualbox__intnet: true
+    
+    control.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--name", "VM"]
+      v.memory = 8192
+      v.cpus = 4
+    end
+    control.vm.provision "shell", inline: <<-SHELL
+      echo '👋 Hello from VM'
+    SHELL
+    control.vm.provision "shell", path: "./scripts/install_requirements.sh"
+  end
+  config.vm.provider "virtualbox"
+end
