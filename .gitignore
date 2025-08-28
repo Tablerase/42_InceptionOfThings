@@ -1,0 +1,5 @@
+argocd
+.vagrant
+.ruby-lsp
+logs/
+*.token
