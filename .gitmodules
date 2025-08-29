@@ -1,0 +1,4 @@
+[submodule "p3/app_repo"]
+	path = p3/app_repo
+	url = git@github.com:Romina-M-A/rmohamma_42_iot_app.git
+  branch = main

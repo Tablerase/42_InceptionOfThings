@@ -6,7 +6,9 @@ Orchestration project with Vagrant and Kubernetes 3d &amp; 3s
 - [**Part 2 - K3s Apps and Ingress**](./p2/)
 - [**Part 3 - K3d + Argo CD**](./p3/)
 
-## Research
+## Notes
+
+<img src="https://www.svgrepo.com/show/376331/kubernetes.svg" alt="Kubernetes Logo" title="Kubernetes Logo" width="200" align="right" />
 
 ### Kubernetes
 
@@ -19,6 +21,33 @@ Kubernetes is an open-source container orchestration platform designed to automa
 ```bash
 # Create Kubernetes Objects
 kubectl apply -f <directory>
+```
+
+#### Namespaces
+
+Namespaces are a way to divide cluster resources between multiple users via resource quota. They provide a mechanism for isolating groups of resources within a single cluster. Namespaces are intended for use in environments with many users spread across multiple teams, or projects.
+
+```mermaid
+graph TD;
+  subgraph Cluster
+    subgraph nsA[Namespace A]
+        direction LR
+        rsr_a@{shape: "display", label: "Resources A"}
+        svc_a[Service A] --> pod_a1[Pod A1]
+        svc_a --> pod_a2[Pod A2]
+    end
+    subgraph nsB[Namespace B]
+        direction LR
+        rsr_b@{shape: "display", label: "Resources B"}
+        svc_b[Service B] --> pod_b1[Pod B1]
+        svc_b --> pod_b2[Pod B2]
+    end
+  end
+
+  classDef k8s fill:#326ce5,stroke:#fff,stroke-width:4px,color:#fff;
+  classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+  class svc_a,pod_a1,pod_a2,svc_b,pod_b1,pod_b2 k8s;
+  class Cluster,nsA,nsB cluster;
 ```
 
 #### K3S
@@ -80,6 +109,8 @@ K3D is a lightweight wrapper around K3s that allows you to run K3s clusters in D
 k3d cluster create mycluster --servers 1 --agents 2
 ```
 
+<img src="https://argo-cd.readthedocs.io/en/stable/assets/logo.png" title="ArgoCD Logo" alt="ArgoCD Logo" align="right" width="200" />
+
 ### Argo CD
 
 - [Argo CD Install](https://argo-cd.readthedocs.io/en/stable/getting_started/)
@@ -92,6 +123,8 @@ Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. It aut
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
+
+<img src="https://argo-cd.readthedocs.io/en/stable/assets/argocd-components.png" title="Argo CD Components" alt="Argo CD Components" />
 
 ### Vagrant
 

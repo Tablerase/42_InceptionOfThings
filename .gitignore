@@ -2,3 +2,4 @@
 .ruby-lsp
 logs/
 *.token
+*.env
