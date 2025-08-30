@@ -1,7 +1,4 @@
 [submodule "P3/manifests"]
 	path = P3/manifests
 	url = git@github.com:Romina-M-A/rmohamma_42_iot_app.git
-[submodule "bonous/manifests"]
-	path = bonous/manifests
-	url = git@github.com:Romina-M-A/rmohamma_42_iot_app.git
 
