@@ -1,4 +1,4 @@
-# VM for K3D exercice
+# VM for K3D exercice - easier evaluation
 # When KVM error: 
 # sudo modprobe -r kvm_intel kvm
 
