@@ -3,7 +3,7 @@ set -euo pipefail
 
 ARGOCD_SERVER=localhost:8080
 ARGOCD_USER=admin
-ARGOCD_PASS=IiX3szUyAA-g5XjE
+ARGOCD_PASS=gMPEFB2ytQ-Fe5Za
 # ARGOCD_PASS=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
 
 # Login
@@ -18,13 +18,13 @@ argocd app create wil-playground \
   --path . \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace dev \
-  --sync-policy automated
-  # --sync-policy none
+  --sync-policy none
 
   ## with --sync-policy automated we can not rollout to previous replicaset
   # --sync-policy automated \
   # --auto-prune \
   # --self-heal
 
+
 # # create app on dev env send request to kubernetes api server
-# argocd app sync wil-playground
+argocd app sync wil-playground
