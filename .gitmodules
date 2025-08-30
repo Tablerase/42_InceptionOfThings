@@ -2,3 +2,6 @@
 	path = P3/manifests
 	url = git@github.com:Romina-M-A/rmohamma_42_iot_app.git
 
+[submodule "bonus/manifests"]
+	path = bonus/manifests
+	url = git@github.com:Romina-M-A/rmohamma_42_iot_app.git
