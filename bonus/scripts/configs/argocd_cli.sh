@@ -23,9 +23,8 @@ echo "✅ Argo CD CLI password: $ARGOCLI_ADMIN_PASSWORD"
 echo "You can now intract with argocd"
 echo "🔑 argocd login localhost:8080 --username admin --password <password> --insecure "
 echo "⚠️ after loging change password with: argocd account update-password"
-echo "🌐 you can reach to app: curl http://localhost:8888/"
-echo "🌐 curl http://<nodeip>:30080 (when service type is nodeport); you can get nodeip: 'kubectl get nodes -o wide'"
-echo "🚪 argocd logout localhost:8080 "
+echo "🌐 you can reach to app: curl http://wil.local/"
+echo "🚪 argocd logout localhost:8080"
 
 # echo "🚀 Temporary kubectl port-forward..."
 # kubectl port-forward svc/wil-playground-service -n dev 8888:9999 > /dev/null 2>&1 &

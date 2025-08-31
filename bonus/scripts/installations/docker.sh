@@ -68,8 +68,8 @@ if ! command -v docker &> /dev/null; then
   # exec sg docker newgrp
 
   # Verify Docker installation
-  echo "✅ Verifying Docker installation..."
-  sudo docker run hello-world || true
+  # echo "✅ Verifying Docker installation..."
+  # sudo docker run hello-world || true
 
   echo "🎉 Docker installation completed successfully!"
   echo "Docker version: $(docker --version || echo 'Check with sudo if needed')"

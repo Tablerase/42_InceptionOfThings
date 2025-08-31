@@ -21,14 +21,21 @@ echo "✅ Verify pods status"
 kubectl get pods -n argocd
 
 
+# # for ingress-argocd.yaml
+# echo "127.0.0.1 argocd.local" | sudo tee -a /etc/hosts
+# echo "🚀 applying ingress-argocd https://argocd.local..."
+# kubectl apply -f ../../config/ingress-argocd.yaml
+
+
+
 # -------------------------------------------------------------------
 # Access the Argo CD API Server (which serves the UI)
 # ArgoCD server runs internally. Let’s expose it:
 # You can connect via one of several method
 # Option A: Port Forwarding (quickest for local usage)
-# open your browser to: https://localhost:8080
+# open your browser to:  http://localhost:8080
 # -------------------------------------------------------------------
-echo "🚀 Port-forwarding Argo CD server to https://localhost:8080..."
+echo "🚀 Port-forwarding Argo CD server to http://localhost:8080..."
 kubectl port-forward svc/argocd-server -n argocd 8080:443 > /dev/null 2>&1 &
 
 
@@ -43,8 +50,9 @@ echo "--------------------------------"
 kubectl -n argocd get secret
 echo "--------------------------------"
 echo
+
 ARGOGU_ADMIN_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret \
   -o jsonpath="{.data.password}" | base64 -d)
 
 echo "✅ Argo CD admin password: $ARGOGU_ADMIN_PASSWORD"
-echo "You can now log in at: https://localhost:8080 with username 'admin'."
+echo "You can now log in at: http://localhost:8080 with username 'admin'."

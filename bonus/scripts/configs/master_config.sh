@@ -9,8 +9,8 @@ SCRIPTS=(
     "cluster.sh"
     "config_kubectl.sh"
     "namespaces.sh"
-    # "argocd_gu.sh"
-    # "argocd_cli.sh"
+    "argocd_gu.sh"
+    "argocd_cli.sh"
     "gitlab.sh"
 )
 

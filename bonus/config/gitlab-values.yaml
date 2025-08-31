@@ -1,23 +1,77 @@
 global:
   edition: ce
+
+  hosts:
+    domain: gitlab.local
+    https: false
+    # shell:
+    #   port: 2222
+
+
   ingress:
     configureCertmanager: false
     tls:
-      enabled: false  # disable TLS for local dev
+      enabled: false
+
   appConfig:
-    waitForPostgres: true  # ensure webservice/sidekiq wait for Postgres
+    enableUsagePing: false
+    enableSeatLink: false
+    enableInitialOAuth: false
+    waitForPostgres: true
+
+  smtp:
+    enabled: false
+
+prometheus:
+  install: false
 
 nginx-ingress:
-  enabled: false  # disable NGINX ingress, use Traefik or port-forward instead
+  enabled: false
 
 gitlab:
+  # gitlab-shell:
+  #   service:
+  #     type: LoadBalancer
+  #     externalPort: 2222
   webservice:
+    replicas: 1
     ingress:
       enabled: false
     persistence:
-      enabled: true
-      storageClass: "local-path"
-      size: 1Gi
+      enabled: false
+    resources:
+      requests:
+        cpu: 500m
+        memory: 2.5Gi
+      limits:
+        cpu: 2
+        memory: 3.5Gi
+    readinessProbe:
+      enabled: false
+    livenessProbe:
+      enabled: false
+
+
+  sidekiq:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 1
+        memory: 1Gi
+
+gitaly:
+  persistence:
+    enabled: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
 
 postgresql:
   install: true
@@ -29,9 +83,7 @@ postgresql:
       cpu: 1
       memory: 1Gi
   persistence:
-    enabled: true
-    storageClass: "local-path"
-    size: 1Gi
+    enabled: false
 
 redis:
   install: true
@@ -44,49 +96,10 @@ redis:
         cpu: 500m
         memory: 512Mi
     persistence:
-      enabled: true
-      storageClass: "local-path"
-      size: 512Mi
-
-gitaly:
-  resources:
-    requests:
-      cpu: 100m
-      memory: 256Mi
-    limits:
-      cpu: 500m
-      memory: 512Mi
-  persistence:
-    enabled: true
-    storageClass: "local-path"
-    size: 1Gi
-
-webservice:
-  replicas: 1
-  resources:
-    requests:
-      cpu: 200m
-      memory: 512Mi
-    limits:
-      cpu: 1
-      memory: 1Gi
-  persistence:
-    enabled: true
-    storageClass: "local-path"
-    size: 1Gi
-
-sidekiq:
-  replicas: 1
-  resources:
-    requests:
-      cpu: 100m
-      memory: 256Mi
-    limits:
-      cpu: 500m
-      memory: 512Mi
+      enabled: false
 
 gitlab-runner:
-  install: false  # optional, avoid running it in tiny local cluster
+  install: false
 
 
 # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/values.yaml?utm_source=chatgpt.com
