@@ -107,6 +107,10 @@ k3d cluster delete <cluster>
 ## Debug
 
 ```bash
+kubectl logs -n <namespace> <resource>
+```
+
+```bash
 # Continuous logging of a pod
 kubectl logs -n kube-system -f pod/<pod name> > /vagrant/logs/pod_name.log
 ```
