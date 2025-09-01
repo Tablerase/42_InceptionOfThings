@@ -27,7 +27,8 @@ if ! command -v brew >/dev/null 2>&1 ; then
 
   # Need by brew
   sudo apt-get install -y build-essential
-  brew install --quiet gcc || true
+  brew install --quiet gcc || true 
+  # TODO: make script continue here (after brew installation)
 fi
 
 # Docker: https://docs.docker.com/engine/install/ubuntu/#installation-methods

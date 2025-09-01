@@ -8,7 +8,7 @@
 CLUSTER_NAME="p3-cluster"
 if ! k3d cluster list | grep -q "^${CLUSTER_NAME}"; then
   echo "Creating k3d cluster ${CLUSTER_NAME}..."
-  k3d cluster create ${CLUSTER_NAME}
+  k3d cluster create ${CLUSTER_NAME} --servers 1 --agents 0
   # Merge current project config (auto created at cluster creation) with defautl config ($HOME/.kube/config)
   k3d kubeconfig merge ${CLUSTER_NAME} --kubeconfig-switch-context
 else

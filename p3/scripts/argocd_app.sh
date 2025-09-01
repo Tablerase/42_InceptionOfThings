@@ -26,7 +26,7 @@ mkdir -p "$LOG_DIR"
 if ! pgrep -f "kubectl port-forward.*$APP_SVC" >/dev/null; then
   echo "☸️ Starting port-forward for $APP_SVC on localhost:$APP_PORT..."
   kubectl port-forward --address 0.0.0.0 svc/$APP_SVC -n $APP_NS $APP_PORT:$APP_PORT > $LOG_DIR/$APP_SVC-portforward.log 2>&1 &
-  sleep 3  # give it a few seconds to bind
+  sleep 10  # give it a few seconds to bind
 fi
 
 # Verify
