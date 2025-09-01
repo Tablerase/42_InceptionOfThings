@@ -1,0 +1,34 @@
+# VM for K3D exercice - easier evaluation
+# When KVM error: 
+# sudo modprobe -r kvm_intel kvm
+
+Vagrant.configure("2") do |config|
+  # Vagrant box: https://developer.hashicorp.com/vagrant/docs/boxes#official-boxes
+  config.vm.box = "bento/ubuntu-24.04"
+  config.vm.box_version = "202508.03.0"
+
+  config.vm.define "rcutteS" do |control|
+    control.vm.hostname = "rcutteS"
+    # Virtual box networking: https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/networking#virtualbox-internal-network
+    control.vm.network "private_network", ip: "192.168.56.110", virtualbox__intnet: true
+    control.vm.network "forwarded_port", guest: 80, host: 8080
+    control.vm.network "forwarded_port", guest: 443, host: 8443
+    
+    control.vm.provider "virtualbox" do |v|
+      # Configure VirtualBox: https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/configuration
+      ## vagrant vbox config: https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/configuration#vboxmanage-customizations
+      ## vbox customize list: https://www.virtualbox.org/manual/ch08.html#vboxmanage-modifyvm
+      v.customize ["modifyvm", :id, "--name", "rcutteS"]
+      # v.memory = 8192
+      v.memory = 6144
+      v.cpus = 6
+    end
+    control.vm.provision "shell", inline: <<-SHELL
+      echo 'Hello from 🐋 K3D VM'
+    SHELL
+    # control.vm.provision "shell", path: "./setup_project.sh"
+  end
+
+  # Providers: https://developer.hashicorp.com/vagrant/docs/providers/basic_usage
+  config.vm.provider "virtualbox"
+end

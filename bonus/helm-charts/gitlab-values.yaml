@@ -1,0 +1,38 @@
+# Charts config: https://docs.gitlab.com/charts/charts/
+global:
+  # Global config: https://docs.gitlab.com/charts/charts/globals/  
+  hosts:
+    domain: localhost
+    externalIP: 127.0.0.1
+    gitlab:
+      name: localhost
+    registry:
+      name: localhost
+
+  ingress:
+    configureCertmanager: false
+
+certmanager:
+  install: false
+
+prometheus:
+  install: false
+
+gitlab-runner:
+  install: false
+
+minio:
+  enabled: false
+
+gitlab:
+  webservice:
+    service:
+      type: ClusterIP
+
+registry:
+  enabled: true
+  hpa:
+    minReplicas: 1
+  service:
+    type: ClusterIP
+    externalPort: 5000
