@@ -1,11 +1,13 @@
 global:
   edition: ce
 
+  externalUrl: "http://gitlab.local"
+
   hosts:
     domain: gitlab.local
     https: false
-    # shell:
-    #   port: 2222
+    gitlab:
+      host: ""
 
 
   ingress:
@@ -29,10 +31,6 @@ nginx-ingress:
   enabled: false
 
 gitlab:
-  # gitlab-shell:
-  #   service:
-  #     type: LoadBalancer
-  #     externalPort: 2222
   webservice:
     replicas: 1
     ingress:

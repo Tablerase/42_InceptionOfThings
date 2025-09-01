@@ -14,7 +14,7 @@ git checkout main
 
 git add .
 git commit -m "update to $NEW_VERSION"
-git remote set-url origin git@github.com:Romina-M-A/rmohamma_42_iot_app.git
+# git remote set-url origin git@github.com:Romina-M-A/rmohamma_42_iot_app.git
 git push
 
 cd -

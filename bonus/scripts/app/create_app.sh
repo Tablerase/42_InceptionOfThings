@@ -3,7 +3,7 @@ set -euo pipefail
 
 ARGOCD_SERVER=localhost:8080
 ARGOCD_USER=admin
-ARGOCD_PASS=hI9kZd7wj2hMn4u0
+ARGOCD_PASS=$(argocd admin initial-password -n argocd)
 # ARGOCD_PASS=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
 
 # # to access http://wil.local
@@ -17,7 +17,7 @@ argocd login $ARGOCD_SERVER --username $ARGOCD_USER --password $ARGOCD_PASS --in
 # with --sync-policy none we can rollout to the previous version of replicaset
 # address of api-server in kubernetes https://kubernetes.default.svc <service name>.<namespace>.svc
 argocd app create wil-playground \
-  --repo http://github.com/Romina-M-A/rmohamma_42_iot_app \
+  --repo http://gitlab.local/root/rmohamma_42_iot_app.git \
   --path . \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace dev \

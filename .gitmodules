@@ -4,4 +4,4 @@
 
 [submodule "bonus/manifests"]
 	path = bonus/manifests
-	url = git@github.com:Romina-M-A/rmohamma_42_iot_app.git
+	url = http://gitlab.local/root/rmohamma_42_iot_app.git

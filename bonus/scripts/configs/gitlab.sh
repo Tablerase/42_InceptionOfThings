@@ -44,5 +44,6 @@ GIT_ROOT_PASSWORD=$(kubectl -n gitlab get secret $REALEAS-gitlab-initial-root-pa
 echo "✅ GitLab roo password: $GIT_ROOT_PASSWORD"
 echo "You can now log in at: http://gitlab.local with username 'root'."
 
+# kubectl port-forward svc/mygitlab-webservice-default -n gitlab 8080:8080
 
-IuDYUxxwfV2b4bUtQlK7w5ADnvzTlXfbDp5ltxiuiQGdbjsMySxwJUe2clO27P3K
+pA85enEJFn7qTTt1wprC1T13pOHQqrEsQgmiMpFhG35sZDWhpySMRlihbLzFp6K8
