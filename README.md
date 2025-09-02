@@ -124,6 +124,23 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
+### Gitlab
+
+🔧 GitLab Deployment Components (Technical Parts)
+
+When you install GitLab (via Omnibus, Helm, or Docker), it brings several services together:
+
+- GitLab Rails app (main web UI + API).
+- PostgreSQL (database).
+- Redis (caching & job queues).
+- Gitaly (handles Git repository storage & access).
+- Sidekiq (background jobs, e.g., sending emails, cleaning data).
+- Workhorse (smart reverse proxy, handles Git pushes/pulls efficiently).
+- NGINX (optional, used for web serving).
+- Prometheus & Grafana (monitoring stack, optional).
+- Registry (Docker image storage).
+- Runner (separate component, not bundled by default).
+
 <img src="https://argo-cd.readthedocs.io/en/stable/assets/argocd-components.png" title="Argo CD Components" alt="Argo CD Components" />
 
 ### Vagrant

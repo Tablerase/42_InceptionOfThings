@@ -50,17 +50,6 @@ flowchart TD;
 
 ## Setup
 
-```bash
-# Setup
-./setup_requirement.sh
-# Project K3D cluster + ArgoCD namespaces
-./setup_project.sh
-# Setup ArgoCD App
-./argocd_app.sh
-# Test gitflow by updating manifests repo version
-cd app_repo
-./update_version.sh
-```
 
 ## Usefull commands
 
