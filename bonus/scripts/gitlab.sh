@@ -1,6 +1,5 @@
 #!/bin/bash
 set -euo pipefail
-IFS=$'\n\t' # Internal Field Separator - use tab/newlines to split
 
 # -----------------------------
 # GitLab Helm Deployment Script
@@ -9,10 +8,10 @@ IFS=$'\n\t' # Internal Field Separator - use tab/newlines to split
 NAMESPACE="gitlab"
 CHART="gitlab/gitlab"
 VALUES="../helm-charts/gitlab-values.yaml"
-INGRESS_MANIFESTS="../manifests/ingress-gitlab.yaml"
-PORT_FORWARD_LOG="/vagrant/logs/gitlab-portforward.log"
-WEBUI_PORT_HOST=8181   # host port to access GitLab WebUI
-WEBUI_PORT_CLUSTER=8181  # service port in cluster
+# INGRESS_MANIFESTS="../manifests/ingress-gitlab.yaml"
+# PORT_FORWARD_LOG="/vagrant/logs/gitlab-portforward.log"
+# WEBUI_PORT_HOST=8181   # host port to access GitLab WebUI
+# WEBUI_PORT_CLUSTER=8181  # service port in cluster
 
 # -----------------------------
 # Add Helm repo & update
@@ -66,7 +65,7 @@ echo "✅ GitLab root password stored in ~/.credentials/gitlab_root_password"
 # fi
 
 # -----------------------------
-# Display access info
+# Display access info (dev)
 # -----------------------------
 echo "------------------------------------"
 echo "GitLab is ready!"

@@ -1,3 +1,4 @@
 [submodule "p3/app_repo"]
 	path = p3/app_repo
 	url = git@github.com:Tablerase/42_InceptionOfThings-rcutte_manifest.git
+  branch = main

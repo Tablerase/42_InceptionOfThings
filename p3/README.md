@@ -16,6 +16,7 @@ flowchart TD;
       app_deployment@{ shape: proc, label: "Deployment (wil-playground)" }
       app_svc@{ shape: proc, label: "Service (wil-playground)" }
       app_pod@{ shape: proc, label: "Pod (wil-playground)" }
+      app_ingress@{ shape: proc, label: "Ingress (wil-playground)" }
     end
   end
 
@@ -23,15 +24,16 @@ flowchart TD;
     subgraph git_repo["Git Repo"]
       manifestD@{shape: doc, label: "deployment.yaml"}
       manifestS@{shape: doc, label: "service.yaml"}
+      manifestI@{shape: doc, label: "ingress.yaml"}
     end
   end
 
   app_deployment appdeppod@--> app_pod
-  app_svc appsvcpod@--> app_pod
 
   git_repo gitargo@-->|"Sync<br>Watches for changes"|argo_pods
   argo_pods argodep@-->|"Applies manifests"|app_deployment
   argo_pods argosvc@-->|"Applies manifests"|app_svc
+  argo_pods argoin@-->|"Applies manifests"|app_ingress
 
   classDef k8s fill: #326ce5,stroke: #fff,stroke-width:4px,color:#fff;
   classDef cluster fill: #fff,stroke: #bbb,stroke-width:2px,color:#326ce5;
@@ -39,25 +41,34 @@ flowchart TD;
   classDef kub-anim stroke-dasharray: 5,5, stroke-dashoffset: 300, stroke-width: 2, stroke: #99dfffc7, animation: dash 25s linear infinite;
   classDef git-anim stroke-dasharray: 5,5, stroke-dashoffset: 300, stroke-width: 2, stroke: #e0b25cff, animation: dash 25s linear infinite;
 
-  class argo_pods,argo_svc,app_deployment,app_pod,app_svc k8s;
+  class argo_pods,argo_svc,app_deployment,app_pod,app_svc,app_ingress k8s;
   class k3d,nsArgo,nsDev cluster;
   class git_repo external;
   class gitargo git-anim;
-  class argodep,argosvc,appdeppod,appsvcpod kub-anim;
+  class argodep,argosvc,argoin,appdeppod,appsvcpod kub-anim;
 ```
 
 ## Setup
 
 ```bash
+# Go to project directory script
+cd p3/scripts
 # Setup
-./setup_requirement.sh
+./requirements.sh
+source ~/.bashrc
+./requirements.sh
 # Project K3D cluster + ArgoCD namespaces
-./setup_project.sh
-# Setup ArgoCD App
-./argocd_app.sh
-# Test gitflow by updating manifests repo version
-cd app_repo
+./project.sh
+# Recover the credentials and go to the ArgoCD UI if needed at https://localhost:8080
+# Setup ArgoCD App (change and or fork manifests repo if needed)
+./app_cicd.sh
+# Test gitflow by updating manifests repo version (assuming you have write access)
+cd app_repo # Go to manifests repo submodule
 ./update_version.sh
+```
+
+```bash
+curl dev.localhost
 ```
 
 ## Usefull commands
@@ -94,4 +105,3 @@ kubectl config set-context --current --namespace=<ns>
 # Remove cluster
 k3d cluster delete <cluster>
 ```
-

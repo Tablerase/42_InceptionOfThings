@@ -3,8 +3,9 @@
 # Set current namespace to argocd
 kubectl config set-context --current --namespace=argocd
 
-# REPO_URL="http://gitlab.localhost/root/repo.git"
-REPO_URL="http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/root/repo.git" # Because k3d kubernetes doesnt have the host dns address
+REPO_USER="root"
+REPO_NAME="app"
+REPO_URL="http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/$REPO_USER/$REPO_NAME.git" # Because k3d kubernetes doesnt have the host dns address
 APP_NS="dev"
 APP_NAME="wil-playground"
 APP_SVC="wil-playground-service"

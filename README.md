@@ -2,6 +2,7 @@
 
 Orchestration project with Vagrant and Kubernetes 3d &amp; 3s
 
+- [**Bonus - Gitlab, ArgoCD and K3D**](./bonus/)
 - [**Part 1 - Vagrant, K3s Server and Agent**](./p1/)
 - [**Part 2 - K3s Apps and Ingress**](./p2/)
 - [**Part 3 - K3d + Argo CD**](./p3/)
@@ -50,31 +51,12 @@ graph TD;
   class Cluster,nsA,nsB cluster;
 ```
 
-#### K3S
-
-- [K3S - Requirements (hardware,network,...)](https://docs.k3s.io/installation/requirements?os=debian)
-- [K3S Install Config Script](https://docs.k3s.io/installation/configuration)
-  - [Install Env Vars](https://docs.k3s.io/reference/env-variables)
-- [📑 K3S Documentation](https://docs.k3s.io/)
-  - [K3S Doc Agent](https://docs.k3s.io/cli/agent)
-  - [K3S Doc Server](https://docs.k3s.io/cli/server)
-
-K3S is a lightweight Kubernetes distribution designed for resource-constrained environments and edge computing. It simplifies the deployment and management of Kubernetes clusters by reducing the complexity and resource requirements typically associated with standard Kubernetes installations.
-
-##### K3S - Flannel
-
-Flannel is a virtual network that connects containers across multiple hosts. It is often used as a network fabric for Kubernetes clusters, providing a layer 3 network that enables pods to communicate with each other regardless of the host they are running on.
-
-##### [K3S Architecture](https://docs.k3s.io/architecture/)
-
-![K3S Architecture](https://docs.k3s.io/assets/images/how-it-works-k3s-revised-9c025ef482404bca2e53a89a0ba7a3c5.svg)
-
 #### Ingress
 
 - [📑 Ingress Documentation](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
-> > [! NOTE]
-> > Ingress dev is frozen. New features are being added to [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/).
+> [!NOTE] \
+> Ingress dev is frozen. New features are being added to [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/).
 
 Ingress is a Kubernetes resource that manages external access to services within a cluster, typically HTTP and HTTPS traffic. It provides a way to define **rules** for routing incoming requests to the appropriate services based on hostnames, paths, or other criteria.
 
@@ -96,6 +78,25 @@ graph LR;
   class client plain;
   class cluster cluster;
 ```
+
+#### K3S
+
+- [K3S - Requirements (hardware,network,...)](https://docs.k3s.io/installation/requirements?os=debian)
+- [K3S Install Config Script](https://docs.k3s.io/installation/configuration)
+  - [Install Env Vars](https://docs.k3s.io/reference/env-variables)
+- [📑 K3S Documentation](https://docs.k3s.io/)
+  - [K3S Doc Agent](https://docs.k3s.io/cli/agent)
+  - [K3S Doc Server](https://docs.k3s.io/cli/server)
+
+K3S is a lightweight Kubernetes distribution designed for resource-constrained environments and edge computing. It simplifies the deployment and management of Kubernetes clusters by reducing the complexity and resource requirements typically associated with standard Kubernetes installations.
+
+##### K3S - Flannel
+
+Flannel is a virtual network that connects containers across multiple hosts. It is often used as a network fabric for Kubernetes clusters, providing a layer 3 network that enables pods to communicate with each other regardless of the host they are running on.
+
+##### [K3S Architecture](https://docs.k3s.io/architecture/)
+
+![K3S Architecture](https://docs.k3s.io/assets/images/how-it-works-k3s-revised-9c025ef482404bca2e53a89a0ba7a3c5.svg)
 
 #### K3D
 
@@ -124,11 +125,11 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
+<img src="https://www.svgrepo.com/show/373625/gitlab.svg" title="GitLab Logo" alt="GitLab Logo" align="right" width="200" />
+
 ### Gitlab
 
-🔧 GitLab Deployment Components (Technical Parts)
-
-When you install GitLab (via Omnibus, Helm, or Docker), it brings several services together:
+GitLab Deployment Components:
 
 - GitLab Rails app (main web UI + API).
 - PostgreSQL (database).
