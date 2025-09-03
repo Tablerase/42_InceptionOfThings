@@ -104,6 +104,10 @@ kubectl logs -n <namespace> <resource>
 kubectl logs -n kube-system -f pod/<pod name> > /vagrant/logs/pod_name.log
 ```
 
+```
+kubectl describe <type> <resource> -n <namespace>
+```
+
 ```bash
 # traefik
 kubectl logs -n kube-system deploy/traefik

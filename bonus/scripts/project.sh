@@ -8,8 +8,9 @@
 CLUSTER_NAME="bonus-cluster"
 if ! k3d cluster list | grep -q "^${CLUSTER_NAME}"; then
   echo "Creating k3d cluster ${CLUSTER_NAME}..."
-  k3d cluster create ${CLUSTER_NAME} --servers 1 --agents 0
-    # --port "80:80@loadbalancer" --port "443:443@loadbalancer" --k3s-arg "--disable=traefik@server:0"
+  k3d cluster create ${CLUSTER_NAME} --servers 1 --agents 0 \
+    --port "80:80@loadbalancer" --port "443:443@loadbalancer"
+    # --k3s-arg "--disable=traefik@server:0"
     # --k3s-arg "--disable=traefik@server:0" # disable default traefik
   # Merge current project config (auto created at cluster creation) with defautl config ($HOME/.kube/config)
   k3d kubeconfig merge ${CLUSTER_NAME} --kubeconfig-switch-context

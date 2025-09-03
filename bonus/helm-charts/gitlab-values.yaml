@@ -5,14 +5,18 @@ global:
   hosts:
     domain: localhost
     https: false
+  ingress:
+    class: traefik 
 
   kas:
     # GitLab Kubernetes Agent Server (KAS) - GitOps, Kubernetes, ...
     # https://docs.gitlab.com/charts/charts/gitlab/kas/
     enabled: false
-  minio:
-    enabled: false
+  # minio:
+    # Storage objects
+    # enabled: false
   registry:
+    # Docker images register
     enabled: false
 
 certmanager-issuer:
@@ -74,8 +78,8 @@ gitlab:
 
   kas:
     install: false
-  minio:
-    install: false
+  # minio:
+    # install: false
   registry:
     install: false
   gitlab-runner:
