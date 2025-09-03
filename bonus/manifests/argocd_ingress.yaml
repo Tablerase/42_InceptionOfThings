@@ -1,0 +1,26 @@
+# https://kubernetes.io/docs/concepts/services-networking/ingress/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: argocd.localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
+  tls:
+    # https://argo-cd.readthedocs.io/en/latest/operator-manual/tls/#tls-certificates-used-by-argocd-server
+    - hosts:
+      - argocd.localhost
+      secretName: argocd-server-tls
+---
+

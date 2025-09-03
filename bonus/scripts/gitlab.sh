@@ -17,18 +17,18 @@ WEBUI_PORT_CLUSTER=8181  # service port in cluster
 # -----------------------------
 # Add Helm repo & update
 # -----------------------------
-# echo "⏳ Adding/updating GitLab Helm repo..."
-# helm repo add gitlab https://charts.gitlab.io/ || true
-# helm repo update
-#
-# # -----------------------------
-# # Install or upgrade GitLab
-# # -----------------------------
-# echo "⏳ Installing/upgrading GitLab..."
-# helm upgrade --install gitlab $CHART \
-#   -n $NAMESPACE --create-namespace \
-#   -f $VALUES
-#
+echo "⏳ Adding/updating GitLab Helm repo..."
+helm repo add gitlab https://charts.gitlab.io/ || true
+helm repo update
+
+# -----------------------------
+# Install or upgrade GitLab
+# -----------------------------
+echo "⏳ Installing/upgrading GitLab..."
+helm upgrade --install gitlab $CHART \
+  -n $NAMESPACE --create-namespace \
+  -f $VALUES
+
 # -----------------------------
 # Wait for GitLab webservice pod
 # -----------------------------
@@ -64,16 +64,14 @@ echo "✅ GitLab root password stored in ~/.credentials/gitlab_root_password"
 #   sleep 5
 #   echo "✅ Port-forward started. Logs: $PORT_FORWARD_LOG"
 # fi
-#
+
 # -----------------------------
 # Display access info
 # -----------------------------
 echo "------------------------------------"
 echo "GitLab is ready!"
-# echo "Web UI: http://localhost:$WEBUI_PORT_HOST"
 echo "Web UI: http://gitlab.localhost"
 echo "Username: root"
 echo "Password: $GITLAB_ROOT_PASSWORD"
-# echo "You can clone a repo via:"
-# echo "git clone http://root:$GITLAB_ROOT_PASSWORD@localhost:$WEBUI_PORT_HOST/<group>/<repo>.git"
 echo "------------------------------------"
+
