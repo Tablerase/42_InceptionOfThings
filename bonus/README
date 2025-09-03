@@ -1,0 +1,7 @@
+in host i have to add
+in ~/.ssh/config file
+
+Host gitlab.local
+    HostName 127.0.0.1
+    Port 2222
+    User git
