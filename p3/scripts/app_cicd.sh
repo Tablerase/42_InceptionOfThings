@@ -32,8 +32,8 @@ mkdir -p "$LOG_DIR"
 # fi
 
 # Verify
-if ss -tnl | grep -q ":$APP_PORT"; then
-  echo "✅ $APP_SVC is now reachable on localhost:$APP_PORT"
-else
-  echo "⚠️ Failed to bind port $APP_PORT"
-fi
+# if ss -tnl | grep -q ":$APP_PORT"; then
+#   echo "✅ $APP_SVC is now reachable on localhost:$APP_PORT"
+# else
+#   echo "⚠️ Failed to bind port $APP_PORT"
+# fi

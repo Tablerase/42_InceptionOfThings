@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     # Virtual box networking: https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/networking#virtualbox-internal-network
     control.vm.network "private_network", ip: "192.168.56.110", virtualbox__intnet: true
     control.vm.network "forwarded_port", guest: 8080, host: 8080, id: "argocd"
-    control.vm.network "forwarded_port", guest: 8888, host: 8888, id: "app"
+    control.vm.network "forwarded_port", guest: 80, host: 8888, id: "app"
     
     control.vm.provider "virtualbox" do |v|
       # Configure VirtualBox: https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/configuration
