@@ -18,7 +18,7 @@ argocd login $ARGOCD_SERVER --username $ARGOCD_USER --password $ARGOCD_PASS --in
 # with --sync-policy none we can rollout to the previous version of replicaset
 # address of api-server in kubernetes https://kubernetes.default.svc <service name>.<namespace>.svc
 argocd app create wil-playground \
-  --repo http://mygitlab-webservice-default.gitlab.svc.cluster.local:8181/root/rmohamma_42_iot_app.git \
+  --repo http://mygitlab-webservice-default.gitlab.svc.cluster.local:8181/root/rmohamma_iot.git \
   --path . \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace dev \
