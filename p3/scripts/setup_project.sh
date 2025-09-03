@@ -6,9 +6,11 @@
 
 # Project Cluster
 CLUSTER_NAME="p3-cluster"
+APP_PORT=8888
+APP_NODEPORT=30080
 if ! k3d cluster list | grep -q "^${CLUSTER_NAME}"; then
   echo "Creating k3d cluster ${CLUSTER_NAME}..."
-  k3d cluster create ${CLUSTER_NAME} --servers 1 --agents 0
+  k3d cluster create ${CLUSTER_NAME} --servers 1 --agents 0 -p "$APP_PORT:$APP_NODEPORT@server:0"
   # Merge current project config (auto created at cluster creation) with defautl config ($HOME/.kube/config)
   k3d kubeconfig merge ${CLUSTER_NAME} --kubeconfig-switch-context
 else
