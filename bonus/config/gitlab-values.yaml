@@ -14,6 +14,7 @@ global:
     configureCertmanager: false
     tls:
       enabled: false
+      
 
   appConfig:
     enableUsagePing: false

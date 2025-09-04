@@ -1,15 +1,18 @@
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: argocd-server-tls
+  name: argocd-ingress
   namespace: argocd
 spec:
-  entryPoints:
-    - websecure   # Traefik’s HTTPS entrypoint
-  routes:
-    - match: HostSNI(`argocd.local`)
-      services:
-        - name: argocd-server
-          port: 443
-  tls:
-    passthrough: true
+  ingressClassName: traefik
+  rules:
+    - host: argocd.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80

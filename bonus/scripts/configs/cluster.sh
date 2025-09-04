@@ -17,7 +17,7 @@ if ! k3d cluster list | grep -q "$CLUSTER_NAME"; then
 
     # # when our service is nodeport type - @server:0 maps to the server container,
     # for our app
-    k3d cluster create $CLUSTER_NAME --servers 1 --agents 0 -p "80:80@loadbalancer" 
+    k3d cluster create $CLUSTER_NAME --servers 1 --agents 0 -p "80:80@loadbalancer" -p "443:443@loadbalancer" 
         # -p "8888:30080@server:0" \ # for access localhost:8888 with NodePOrt type in service
         # -p "443:443@loadbalancer" # for access argocdgu on argocd.local and argocd_cli with IngressRouteTCP yaml
 

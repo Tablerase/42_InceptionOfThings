@@ -20,23 +20,26 @@ kubectl wait --for=condition=Ready pods --all -n argocd --timeout=300s
 echo "✅ Verify pods status"
 kubectl get pods -n argocd
 
+# openssl req -x509 -nodes -days 365 \
+#   -newkey rsa:2048 \
+#   -keyout argocd.key \
+#   -out argocd.crt \
+#   -subj "/CN=argocd.local/O=argocd.local"
+
+# kubectl create secret tls argocd-tls \
+#   --cert=argocd.crt \
+#   --key=argocd.key \
+#   -n argocd
+
+kubectl patch configmap argocd-cmd-params-cm -n argocd \
+  --type merge \
+  -p '{"data":{"server.insecure":"true"}}'
+
 
 # # for ingress-argocd.yaml
-# echo "127.0.0.1 argocd.local" | sudo tee -a /etc/hosts
-# echo "🚀 applying ingress-argocd https://argocd.local..."
-# kubectl apply -f ../../config/ingress-argocd.yaml
-
-
-
-# -------------------------------------------------------------------
-# Access the Argo CD API Server (which serves the UI)
-# ArgoCD server runs internally. Let’s expose it:
-# You can connect via one of several method
-# Option A: Port Forwarding (quickest for local usage)
-# open your browser to:  http://localhost:8080
-# -------------------------------------------------------------------
-echo "🚀 Port-forwarding Argo CD server to http://localhost:8080..."
-kubectl port-forward svc/argocd-server -n argocd 8080:443 > /dev/null 2>&1 &
+echo "127.0.0.1 argocd.local" | sudo tee -a /etc/hosts
+echo "🚀 applying ingress-argocd https://argocd.local..."
+kubectl apply -f ../../config/ingress-argocd.yaml
 
 
 # -------------------------------------------------------------------
