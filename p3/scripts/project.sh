@@ -68,6 +68,8 @@ if kubectl get secret argocd-initial-admin-secret -n argocd >/dev/null 2>&1; the
   chmod 600 /home/vagrant/.argocd_admin_pass.old
   echo "✅ ArgoCD initial password stored at /home/vagrant/.argocd_admin_pass.old"
 
+  # TODO: Make password management handled the same as bonus
+
   # Define new password
   NEW_PASS=${ARGOCD_NEW_PASS:-ChangeMe123!}
   echo "🔄 Updating ArgoCD admin password..."

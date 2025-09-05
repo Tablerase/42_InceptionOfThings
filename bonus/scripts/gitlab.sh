@@ -33,7 +33,7 @@ helm upgrade --install gitlab $CHART \
 # -----------------------------
 echo "⏳ Waiting for GitLab webservice pod to be ready..."
 sleep 5
-kubectl wait --for=condition=Ready pod -l app=webservice,release=gitlab -n $NAMESPACE --timeout=300s
+kubectl wait --for=condition=Ready pod -l app=webservice,release=gitlab -n $NAMESPACE --timeout=480s
 
 # Apply custom GitLab ingress
 # echo "☸️ Applying GitLab ingress..."

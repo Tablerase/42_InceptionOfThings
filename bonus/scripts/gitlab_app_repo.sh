@@ -6,7 +6,7 @@ HOST_ALIAS="gitlab.localhost"
 SSH_KEY="$HOME/.ssh/id_ed25519"
 GITLAB_USER="root"
 PROJECT_NAME="app"
-SRC_DIR="/vagrant/app_repo" # absolute folder with source files for gitlab repo
+SRC_DIR="$HOME/IoT/bonus/app_repo" # absolute folder with source files for gitlab repo
 CLONE_DIR="$HOME/$PROJECT_NAME"
 
 if [ ! -d "$SRC_DIR" ]; then
@@ -14,6 +14,7 @@ if [ ! -d "$SRC_DIR" ]; then
   exit 1
 fi
 
+# TODO: Fix Gitlab shell connection refused error
 # ---------- 1. Check SSH config ----------
 if ! ssh -o BatchMode=yes -T git@$HOST_ALIAS 2>&1 | grep -q "Welcome to GitLab"; then
   echo "❌ SSH to GitLab failed. Check ~/.ssh/config and that the key is added to GitLab."
