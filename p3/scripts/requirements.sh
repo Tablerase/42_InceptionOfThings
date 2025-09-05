@@ -53,6 +53,12 @@ if ! command -v docker version >/dev/null 2>&1 ; then
   newgrp docker
 fi
 
+if ! groups | grep docker 2>&1 ; then
+  # Add user to docker group
+  sudo usermod -aG docker $USER
+  newgrp docker
+fi
+
 # Kubectl: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 if ! command -v kubectl >/dev/null 2>&1 ; then
   echo "☸️ Installing Kubectl" 
