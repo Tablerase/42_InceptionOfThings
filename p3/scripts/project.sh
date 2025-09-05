@@ -10,9 +10,11 @@ APP_PORT=8888
 APP_NODEPORT=30080
 if ! k3d cluster list | grep -q "^${CLUSTER_NAME}"; then
   echo "Creating k3d cluster ${CLUSTER_NAME}..."
+  # k3d cluster create ${CLUSTER_NAME} --servers 1 --agents 0 \
+    # --port "80:80@loadbalancer"
   k3d cluster create ${CLUSTER_NAME} --servers 1 --agents 0 \
+    --port "$APP_PORT:$APP_NODEPORT@server:0" \
     --port "80:80@loadbalancer"
-  # k3d cluster create ${CLUSTER_NAME} --servers 1 --agents 0 -p "$APP_PORT:$APP_NODEPORT@server:0"
   # Merge current project config (auto created at cluster creation) with defautl config ($HOME/.kube/config)
   k3d kubeconfig merge ${CLUSTER_NAME} --kubeconfig-switch-context
 else
@@ -43,6 +45,7 @@ fi
 
 # Wait for ArgoCD server pod to be Running
 echo "⏳ Waiting for ArgoCD server pod..."
+sleep 5
 kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=argocd-server -n argocd --timeout=120s
 
 # Allow WebUI for ArgoCD
@@ -50,8 +53,9 @@ if ! pgrep -f "kubectl port-forward.*argocd-server" >/dev/null; then
   echo "☸️ Starting ArgoCD WebUI (port-forward)"
   # Here address on 0.0.0.0 to allow host machine to reach VM argocd server: https://stackoverflow.com/questions/72946576/cant-access-argocd-ui-that-is-in-a-vm-with-port-forwarding-set-in-vagrant-file?utm_source=chatgpt.com
   # kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 &
-  mkdir -p /vagrant/logs
-  kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 > /vagrant/logs/argocd-portforward.log 2>&1 &
+  LOG_DIR="/tmp/logs"
+  mkdir -p $LOG_DIR
+  kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 > $LOG_DIR/argocd-portforward.log 2>&1 &
   sleep 5   # give it a few seconds to bind
 fi
 

@@ -20,20 +20,20 @@ APP_NS="dev"
 APP_SVC="wil-playground-service"
 APP_PORT=8888
 APP_NODEPORT=30080
-LOG_DIR="/vagrant/logs"
+LOG_DIR="/tmp/logs"
 mkdir -p "$LOG_DIR"
 
 # Check if port-forward is already running
-# if ! pgrep -f "kubectl port-forward.*$APP_SVC" >/dev/null; then
-#   sleep 5
-#   echo "☸️ Starting port-forward for $APP_SVC on localhost:$APP_PORT..."
-#   kubectl port-forward --address 0.0.0.0 svc/$APP_SVC -n $APP_NS $APP_PORT:$APP_NODEPORT > $LOG_DIR/$APP_SVC-portforward.log 2>&1 &
-#   sleep 5  # give it a few seconds to bind
-# fi
+if ! pgrep -f "kubectl port-forward.*$APP_SVC" >/dev/null; then
+  sleep 5
+  echo "☸️ Starting port-forward for $APP_SVC on localhost:$APP_PORT..."
+  kubectl port-forward --address 0.0.0.0 svc/$APP_SVC -n $APP_NS $APP_PORT:$APP_NODEPORT > $LOG_DIR/$APP_SVC-portforward.log 2>&1 &
+  sleep 5  # give it a few seconds to bind
+fi
 
 # Verify
-# if ss -tnl | grep -q ":$APP_PORT"; then
-#   echo "✅ $APP_SVC is now reachable on localhost:$APP_PORT"
-# else
-#   echo "⚠️ Failed to bind port $APP_PORT"
-# fi
+if ss -tnl | grep -q ":$APP_PORT"; then
+  echo "✅ $APP_SVC is now reachable on localhost:$APP_PORT"
+else
+  echo "⚠️ Failed to bind port $APP_PORT"
+fi
