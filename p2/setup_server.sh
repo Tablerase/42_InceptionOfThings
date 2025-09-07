@@ -54,6 +54,23 @@ while :; do
   sleep "$interval"
 done
 
+timeout=60
+start_time=$(date +%s)
+
+echo "[INFO] Waiting for 'default' namespace to become available..."
+until kubectl get namespace default >/dev/null 2>&1; do
+  current_time=$(date +%s)
+  elapsed=$((current_time - start_time))
+
+  if [ $elapsed -ge $timeout ]; then
+    echo "[ERROR] Timeout reached: 'default' namespace not found after ${timeout}s."
+    exit 1
+  fi
+
+  sleep 2
+done
+echo "[INFO] 'default' namespace is ready."# Now apply manifests
+
 # Deploy applications, services, and ingress
 # - https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/#how-to-create-objects
 kubectl apply -f /vagrant/multi_apps/app1/
