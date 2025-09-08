@@ -18,7 +18,7 @@ spec:
             port:
               number: 80
   tls:
-    https://argo-cd.readthedocs.io/en/latest/operator-manual/tls/#tls-certificates-used-by-argocd-server
+    # https://argo-cd.readthedocs.io/en/latest/operator-manual/tls/#tls-certificates-used-by-argocd-server
     - hosts:
       - argocd.localhost
       secretName: argocd-server-tls

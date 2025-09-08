@@ -8,6 +8,8 @@
 CLUSTER_NAME="p3-cluster"
 APP_PORT=8888
 APP_NODEPORT=30080
+ARGOCD_HOST="localhost:8080"
+
 if ! k3d cluster list | grep -q "^${CLUSTER_NAME}"; then
   echo "Creating k3d cluster ${CLUSTER_NAME}..."
   # k3d cluster create ${CLUSTER_NAME} --servers 1 --agents 0 \
@@ -41,6 +43,8 @@ fi
 if ! command -v argocd version >/dev/null 2>&1 ; then
   echo "🦑 Installing ArgoCD CLI"
   brew install argocd
+else  
+  rm -f ~/.config/argocd/config
 fi
 
 # Wait for ArgoCD server pod to be Running
@@ -65,16 +69,19 @@ if kubectl get secret argocd-initial-admin-secret -n argocd >/dev/null 2>&1; the
   echo "🔑 Retrieving ArgoCD initial admin password..."
   mkdir -p $CREDENTIALS_DIR
   ARGOCD_ADMIN_PASS=$(kubectl get secret argocd-initial-admin-secret \
-    -n $NAMESPACE -o jsonpath="{.data.password}" | base64 -d)
+    -n argocd -o jsonpath="{.data.password}" | base64 -d)
   echo "$ARGOCD_ADMIN_PASS" > $CREDENTIALS_DIR/.argocd_admin_pass.old
   chmod 600 $CREDENTIALS_DIR/.argocd_admin_pass.old
   echo "✅ ArgoCD initial password stored at $CREDENTIALS_DIR/.argocd_admin_pass.old"
 
-    # Login with the initial password
-  argocd login $ARGOCD_HOST \
-    --username admin \
-    --password "$ARGOCD_ADMIN_PASS" \
-    --insecure
+  # Login with the initial password
+  if ! argocd login $ARGOCD_HOST \
+      --username admin \
+      --password "$ARGOCD_ADMIN_PASS" \
+      --insecure; then
+    echo "❌ Failed to login to ArgoCD. Please check if the server is reachable at $ARGOCD_HOST"
+    exit 1
+  fi
 
   # -----------------------------
   # Display access info (dev)

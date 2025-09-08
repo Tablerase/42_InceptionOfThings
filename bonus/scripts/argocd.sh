@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 # ArgoCD: https://argo-cd.readthedocs.io/en/stable/getting_started/
 
@@ -15,6 +16,8 @@ fi
 if ! command -v argocd version >/dev/null 2>&1 ; then
   echo "🦑 Installing ArgoCD CLI"
   brew install argocd
+else  
+  rm -f ~/.config/argocd/config
 fi
 
 # Wait for ArgoCD server pod to be Running
@@ -45,18 +48,21 @@ if kubectl get secret argocd-initial-admin-secret -n argocd >/dev/null 2>&1; the
   chmod 600 $CREDENTIALS_DIR/.argocd_admin_pass.old
   echo "✅ ArgoCD initial password stored at $CREDENTIALS_DIR/.argocd_admin_pass.old"
 
-    # Login with the initial password
-  argocd login $ARGOCD_HOST \
-    --username admin \
-    --password "$ARGOCD_ADMIN_PASS" \
-    --insecure
+  # Login with the initial password
+  if ! argocd login $ARGOCD_HOST \
+      --username admin \
+      --password "$ARGOCD_ADMIN_PASS" \
+      --insecure; then
+    echo "❌ Failed to login to ArgoCD. Please check if the server is reachable at $ARGOCD_HOST"
+    exit 1
+  fi
 
   # -----------------------------
   # Display access info (dev)
   # -----------------------------
   echo "------------------------------------"
   echo "Argo is ready!"
-  echo "Web UI: http://argocd.localhost"
+  echo "Web UI: http://argocd.localhost:8080"
   echo "Username: admin"
   echo "Password: $ARGOCD_ADMIN_PASS"
   echo "------------------------------------"

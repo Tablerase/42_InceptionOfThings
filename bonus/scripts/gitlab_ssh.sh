@@ -39,6 +39,12 @@ EOF
 
 chmod 600 "$SSH_CONFIG"
 
+if ssh -o BatchMode=yes -T git@$HOST_ALIAS 2>&1 | grep -q "Host key verification failed"; then
+  echo "✅ SSH config for known hosts update"
+  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[gitlab.localhost]:32222"
+  ssh-keyscan -p 32222 gitlab.localhost >> "$HOME/.ssh/known_hosts"
+fi
+
 echo "✅ SSH config for $HOST_ALIAS set up"
 echo "👉 Now add the following public key to GitLab:"
 echo

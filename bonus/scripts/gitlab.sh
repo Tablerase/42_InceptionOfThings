@@ -26,7 +26,7 @@ helm repo update
 echo "⏳ Installing/upgrading GitLab..."
 helm upgrade --install gitlab $CHART \
   -n $NAMESPACE --create-namespace \
-  -f $VALUES
+  -f $VALUES --timeout "10m0s"
 
 # -----------------------------
 # Wait for GitLab webservice pod
@@ -64,7 +64,10 @@ echo "✅ GitLab root password stored in ~/.credentials/gitlab_root_password"
 #   echo "✅ Port-forward started. Logs: $PORT_FORWARD_LOG"
 # fi
 
-# kubectl port-forward --address 0.0.0.0 svc/gitlab-gitlab-shell -n gitlab 32222:22
+LOG_DIR="/tmp/logs"
+mkdir -p $LOG_DIR
+kubectl port-forward --address 0.0.0.0 svc/gitlab-gitlab-shell -n gitlab 32222:22 > $LOG_DIR/gitlab-portforward.log 2>&1 &
+sleep 5
 
 # -----------------------------
 # Display access info (dev)

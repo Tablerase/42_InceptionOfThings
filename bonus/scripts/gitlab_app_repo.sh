@@ -15,15 +15,14 @@ if [ ! -d "$SRC_DIR" ]; then
 fi
 
 if ssh -o BatchMode=yes -T git@$HOST_ALIAS 2>&1 | grep -q "Host key verification failed"; then
-  ssh-keygen -f "~/.ssh/known_hosts" -R "[gitlab.localhost]:32222"
-  ssh-keyscan -p 32222 gitlab.localhost >> ~/.ssh/known_hosts
+  echo "❌ SSH to know_host failed. Use ./gitlab_ssh.sh to replace know_host with appropriate values"
+  exit 1
 fi
 
-# TODO: Fix Gitlab shell connection refused error
 # ---------- 1. Check SSH config ----------
 # Sometimes know_host pb (add gitlab to known_hosts):
 if ! ssh -o BatchMode=yes -T git@$HOST_ALIAS 2>&1 | grep -q "Welcome to GitLab"; then
-  echo "❌ SSH to GitLab failed. Check ~/.ssh/config and that the key is added to GitLab."
+  echo "❌ SSH to GitLab failed. Check that  ssh key is added to GitLab."
   exit 1
 fi
 echo "✅ SSH to GitLab works"
