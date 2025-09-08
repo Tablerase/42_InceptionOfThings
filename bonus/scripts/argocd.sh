@@ -25,12 +25,13 @@ kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=argocd-server -
 kubectl apply -n $NAMESPACE -f $INGRESS_MANIFEST
 
 # Allow WebUI for ArgoCD
+LOG_DIR="/tmp/logs"
 if ! pgrep -f "kubectl port-forward.*argocd-server" >/dev/null; then
   echo "☸️ Starting ArgoCD WebUI (port-forward)"
-  # Infos: 0.0.0.0 - allow host machine to reach VM argocd server: https://stackoverflow.com/questions/72946576/cant-access-argocd-ui-that-is-in-a-vm-with-port-forwarding-set-in-vagrant-file
+  # Here address on 0.0.0.0 to allow host machine to reach VM argocd server: https://stackoverflow.com/questions/72946576/cant-access-argocd-ui-that-is-in-a-vm-with-port-forwarding-set-in-vagrant-file?utm_source=chatgpt.com
   # kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 &
-  mkdir -p /vagrant/logs
-  kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 > /vagrant/logs/argocd-portforward.log 2>&1 &
+  mkdir -p $LOG_DIR
+  kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 > $LOG_DIR/argocd-portforward.log 2>&1 &
   sleep 5   # give it a few seconds to bind
 fi
 

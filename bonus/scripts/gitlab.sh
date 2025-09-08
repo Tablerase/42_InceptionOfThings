@@ -31,7 +31,7 @@ helm upgrade --install gitlab $CHART \
 # -----------------------------
 # Wait for GitLab webservice pod
 # -----------------------------
-echo "⏳ Waiting for GitLab webservice pod to be ready..."
+echo "⏳ Waiting for GitLab webservice pod to be ready (heavy load can take a while)..."
 sleep 5
 kubectl wait --for=condition=Ready pod -l app=webservice,release=gitlab -n $NAMESPACE --timeout=480s
 
@@ -63,6 +63,8 @@ echo "✅ GitLab root password stored in ~/.credentials/gitlab_root_password"
 #   sleep 5
 #   echo "✅ Port-forward started. Logs: $PORT_FORWARD_LOG"
 # fi
+
+# kubectl port-forward --address 0.0.0.0 svc/gitlab-gitlab-shell -n gitlab 32222:22
 
 # -----------------------------
 # Display access info (dev)

@@ -18,9 +18,18 @@ spec:
             port:
               number: 80
   tls:
-    # https://argo-cd.readthedocs.io/en/latest/operator-manual/tls/#tls-certificates-used-by-argocd-server
+    https://argo-cd.readthedocs.io/en/latest/operator-manual/tls/#tls-certificates-used-by-argocd-server
     - hosts:
       - argocd.localhost
       secretName: argocd-server-tls
----
+# ---
+# # https://kubernetes.io/docs/concepts/configuration/configmap/
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: argocd-cmd-params-cm
+#   namespace: argocd
+# data:
+#   server.insecure: "true"
+# ---
 
